@@ -79,7 +79,8 @@
   }
 
   //活动总览tabs数据获取
-  async function getTabs1Data() {
+  async function getTabs1Data(e) {
+    let sheetName = e == '130000' ? '抖音' : '跨端'
     var myHeaders = new Headers();
     myHeaders.append("content-type", "application/json;charset=UTF-8");
     let bodyData = {
@@ -88,7 +89,7 @@
       stat_types: [1, 2, 7],
       if_level_3_trigger_point: true,
       trigger_point: {
-        level_1_trigger_point: { query_type_point_id: "130000" },
+        level_1_trigger_point: { query_type_point_id: e },
       },
     };
     let postRequestOptions = {
@@ -111,14 +112,14 @@
       data,
       postRequestOptions
     );
-    console.log(requestData);
     Object.keys(requestData?.data?.item_list[0]?.by_day_list).map(v=>{
         contrast[moment(v).format("YYYY-MM-DD")] = v
     })
     let expData = requestData?.data?.item_list?.map((v,i)=>{
         let data = {}
         Object.keys(v.by_day_list).map(r=>{
-            data[r] = v.by_day_list[r]?.pv
+            //pv：曝光次数  uv：曝光人数  cost：消耗金额
+            data[r] = v.by_day_list[r]?.cost
         })
         let a = Object.values(v.trigger_point).map(v=>{
             return v.query_type_point_name_zh
@@ -128,10 +129,11 @@
             data
         }
     })
+    console.log(expData)
     // requestData.data.rsp
     let datas = {
-      sheetName: "抖音",
-      sheetData: expData,
+      sheetName,
+      sheetData: expData.map(v=>v.data),
       sheetHeader: Object.keys({...title,...contrast}),
       sheetFilter: Object.values({...title,...contrast}),
       columnWidths: [], // 列宽
@@ -150,7 +152,10 @@
   }
 
   function urlClick() {
-    getTabs1Data()
+    let pointId = ['130000','150000']
+    pointId.forEach(v=>{
+        getTabs1Data(v)
+    })
     debounce = _.debounce(expExcel, 5000)
     loadingMsg = Qmsg.loading("正在导出，请勿重复点击！");
     

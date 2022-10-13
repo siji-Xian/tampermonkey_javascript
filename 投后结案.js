@@ -9,7 +9,7 @@
 // @grant        none
 // @require      https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.2.1/jquery.min.js
 // @require      https://cdn.bootcss.com/moment.js/2.20.1/moment.min.js
-// @require      https://cuikangjie.github.io/JsonExportExcel/dist/JsonExportExcel.min.js
+// @require      http://cdn.inlymedia.com/JsonExportExcel.min.js
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js
 // @require      https://qmsg.refrain.xyz/message.min.js
 // ==/UserScript==
