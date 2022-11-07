@@ -22,7 +22,7 @@
   document.body.appendChild(new_element);
 
   var button = document.createElement("button"); //创建一个按钮
-  button.textContent = "byDay数据导出"; //按钮内容
+  button.textContent = "byDay"; //按钮内容
   // button.style.width = "120px"; //按钮宽度
   button.style.align = "center"; //文本居中
   button.style.color = "white"; //按钮文字颜色
